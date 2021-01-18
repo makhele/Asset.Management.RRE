@@ -1,0 +1,53 @@
+<h2 mat-dialog-title>Upload Vehicle Photos Only</h2>
+<mat-card-subtitle>Upload at least one Vehicle Photo. Note that the vehicle will be mark as verified after the Photo has been uploaded</mat-card-subtitle>
+<hr>
+<dl class="row">
+  <dt class="col-md-3 col-sm-6">Fleet Number:</dt>
+  <dd class="col-md-3 col-sm-6">{{vehicle.fleetNumber}}</dd>
+  <dt class="col-md-3 col-sm-6">Registration Number:</dt>
+  <dd class="col-md-3 col-sm-6">{{vehicle.registrationNumber}}</dd>
+  <dt class="col-md-3 col-sm-6">Make:</dt>
+  <dd class="col-md-3 col-sm-6">{{vehicle.make}}</dd>
+  <dt class="col-md-3 col-sm-6">Model:</dt>
+  <dd class="col-md-3 col-sm-6">{{vehicle.model}}</dd>
+</dl>
+<hr>
+<div mat-dialog-content>
+  <div *ngIf="!vehicle.isEdit; else elseBlock" class="image-container">
+  <app-image-upload [imageBackground]="'/assets/images/vehicle-views/front.png'"
+                    (uploadedFile)="onSubmitFrontImage($event)"></app-image-upload>
+  <app-image-upload [imageBackground]="'/assets/images/vehicle-views/back.png'"
+                    (uploadedFile)="onSubmitBackImage($event)"></app-image-upload>
+  <app-image-upload [imageBackground]="'/assets/images/vehicle-views/frontside.png'"
+                    (uploadedFile)="onSubmitFrontSideImage($event)"></app-image-upload>
+  <app-image-upload [imageBackground]="'/assets/images/vehicle-views/backside.png'"
+                    (uploadedFile)="onSubmitBackSideImage($event)"></app-image-upload>
+  <app-image-upload [imageBackground]="'/assets/images/vehicle-views/side.png'"
+                    (uploadedFile)="onSubmitSideImage($event)"></app-image-upload>
+    <app-image-upload [imageBackground]="'/assets/images/vehicle-views/licencedisk.png'"
+                      (uploadedFile)="onSubmitLicenceDiskImage($event)"></app-image-upload>
+  </div>
+  <ng-template  #elseBlock>
+    <div class="image-container">
+      <app-image-upload [imageBackground]="!imageUrls[0]? '/assets/images/vehicle-views/front.png':  imageUrls[0]| async"
+                        (uploadedFile)="onSubmitFrontImage($event)"></app-image-upload>
+      <app-image-upload [imageBackground]="!imageUrls[1]? '/assets/images/vehicle-views/back.png':  imageUrls[1]| async"
+                        (uploadedFile)="onSubmitBackImage($event)"></app-image-upload>
+      <app-image-upload [imageBackground]="!imageUrls[2]? '/assets/images/vehicle-views/frontside.png':  imageUrls[2]| async"
+                        (uploadedFile)="onSubmitFrontSideImage($event)"></app-image-upload>
+      <app-image-upload [imageBackground]="!imageUrls[3]? '/assets/images/vehicle-views/backside.png':  imageUrls[3]| async"
+                        (uploadedFile)="onSubmitBackSideImage($event)"></app-image-upload>
+      <app-image-upload [imageBackground]="!imageUrls[4]? '/assets/images/vehicle-views/side.png':  imageUrls[4]| async"
+                        (uploadedFile)="onSubmitSideImage($event)"></app-image-upload>
+      <app-image-upload [imageBackground]="!imageUrls[5]? '/assets/images/vehicle-views/licencedisk.png':  imageUrls[5]| async"
+                        (uploadedFile)="onSubmitLicenceDiskImage($event)"></app-image-upload>
+    </div>
+  </ng-template>
+
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button [disabled]="fileCount==0" (click)="onSubmit()" color="primary">Upload Images</button>
+  <button mat-button [mat-dialog-close]=undefined>Close</button>
+
+</div>
+

@@ -1,0 +1,219 @@
+
+<h2 mat-dialog-title>Verify Vehicle including Image</h2>
+<mat-card-subtitle>Verify Vehicle or Equipment including Images. Note that at least one Image should be uploaded</mat-card-subtitle>
+<hr>
+<dl class="row">
+  <dt class="col-md-3 col-sm-6">Fleet Number:</dt>
+  <dd class="col-md-3 col-sm-6">{{vehicle.fleetNumber}}</dd>
+  <dt class="col-md-3 col-sm-6">Registration Number:</dt>
+  <dd class="col-md-3 col-sm-6">{{vehicle.registrationNumber}}</dd>
+  <dt class="col-md-3 col-sm-6">Make:</dt>
+  <dd class="col-md-3 col-sm-6">{{vehicle.make}}</dd>
+  <dt class="col-md-3 col-sm-6">Model:</dt>
+  <dd class="col-md-3 col-sm-6">{{vehicle.model}}</dd>
+
+</dl>
+<hr>
+<div mat-dialog-content>
+  <mat-vertical-stepper linear>
+
+    <mat-step label="Vehicle or Equipment Details" state="edit" [stepControl]="newVehicleVerificationForm" editable="false">
+
+      <form [formGroup]="newVehicleVerificationForm" (ngSubmit)="onSubmitVehicle(newVehicleVerificationForm.value)">
+          <mat-form-field class="col-md-6">
+            <mat-label>Fleet Number</mat-label>
+            <input matInput formControlName='fleetNumber'>
+            <mat-error *ngIf="newVehicleVerificationForm.get('fleetNumber').hasError('required')">
+              Fleet Number is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="newVehicleVerificationForm.get('fleetNumber').hasError('noSpaces')">
+              Fleet Number should not contain spaces
+            </mat-error>
+            <mat-error *ngIf="newVehicleVerificationForm.get('fleetNumber').hasError('pattern')">
+              Fleet Number format is invalid e.g <strong>GBL999FS</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="newVehicleVerificationForm.get('fleetNumber').hasError('minlength') || newVehicleVerificationForm.get('fleetNumber').hasError('maxlength')">
+              Fleet Number should have <strong>8 Alphanumeric Characters</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-md-6">
+            <mat-label> Registration Number</mat-label>
+            <input matInput formControlName='registrationNumber'>
+            <mat-error *ngIf="newVehicleVerificationForm.get('registrationNumber').hasError('required')">
+              Registration Number is <strong>required</strong> else input <strong>XXX000FS</strong>
+            </mat-error>
+            <mat-error *ngIf="newVehicleVerificationForm.get('registrationNumber').hasError('noSpaces')">
+              Registration Number should not contain spaces
+            </mat-error>
+            <mat-error *ngIf="newVehicleVerificationForm.get('registrationNumber').hasError('pattern')">
+              Registration Number format is invalid e.g <strong>GBL999FS</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="newVehicleVerificationForm.get('registrationNumber').hasError('minlength') || newVehicleVerificationForm.get('registrationNumber').hasError('maxlength')">
+              Registration Number should have <strong>8 Alphanumeric Characters</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-md-6">
+            <mat-label>Make</mat-label>
+            <input matInput formControlName='make'>
+            <mat-error *ngIf="newVehicleVerificationForm.get('make').hasError('required')">
+              Make is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-md-6">
+            <mat-label>Model</mat-label>
+            <input matInput formControlName='model'>
+            <mat-error *ngIf="newVehicleVerificationForm.get('model').hasError('required')">
+              Model is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-6">
+            <mat-label>Chassis Number</mat-label>
+            <input matInput formControlName='chassisNumber'>
+            <mat-error *ngIf="newVehicleVerificationForm.get('chassisNumber').hasError('required')">
+              Chassis Number is <strong>required</strong>
+            </mat-error>
+            <!--      <mat-error *ngIf="newVehicleVerificationForm.get('chassisNumber').hasError('noSpaces')">-->
+            <!--        Chassis Number should not contain spaces-->
+            <!--      </mat-error>-->
+
+
+          </mat-form-field>
+          <mat-form-field class="col-md-6">
+            <mat-label>Engine Number</mat-label>
+            <input matInput formControlName='engineNumber'>
+            <mat-error *ngIf="newVehicleVerificationForm.get('engineNumber').hasError('required')">
+              Engine Number is <strong>required</strong>
+            </mat-error>
+            <!--      <mat-error *ngIf="newVehicleVerificationForm.get('engineNumber').hasError('noSpaces')">-->
+            <!--        Engine Number should not contain spaces-->
+            <!--      </mat-error>-->
+          </mat-form-field>
+          <mat-form-field class="col-md-6">
+            <mat-label>KM or Hour Reading</mat-label>
+            <input type="number" matInput formControlName='kmOrHourReading'>
+
+          </mat-form-field>
+          <mat-form-field class="col-md-6">
+            <mat-label>Select Region</mat-label>
+            <mat-select formControlName='region'>
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let region of regions" [value]="region">
+                {{region}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="newVehicleVerificationForm.get('region').hasError('required')">
+              Region is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="col-md-6">
+            <mat-label>District / Workshop / Pool Location</mat-label>
+            <input matInput formControlName='district'>
+            <mat-error *ngIf="newVehicleVerificationForm.get('district').hasError('required')">
+              District is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <div class="col-md-6">
+            <label>Current Client</label>
+            <mat-radio-group formControlName="client">
+              <mat-radio-button value="Roads Infrastructure (RI)">
+                Roads Infrastructure (RI)
+              </mat-radio-button>
+              <mat-radio-button value="Other Institutions (OI)" #otherInstitution>
+                Other Institutions (OI)
+              </mat-radio-button>
+              <mat-radio-button value="Road Building Equipment (RBE)">
+                Road Building Equipment (RBE)
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <mat-form-field *ngIf="otherInstitution.checked" class="col-md-6">
+            <mat-label>Other Institution Name</mat-label>
+            <input matInput formControlName='otherInstitutionName' >
+          </mat-form-field>
+          <div class="col-md-6">
+            <label>Vehicle or Equipment Condition</label>
+            <mat-radio-group formControlName="condition">
+              <mat-radio-button value="Good">
+                Good
+              </mat-radio-button>
+              <mat-radio-button value="Reasonable">
+                Reasonable
+              </mat-radio-button>
+              <mat-radio-button value="Poor">
+                Poor
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+
+          <mat-form-field class="col-md-6">
+            <mat-label>Vehicle Status or Action</mat-label>
+            <mat-select formControlName='status'>
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let status of statuses" [value]="status">
+                {{status}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="newVehicleVerificationForm.get('status').hasError('required')">
+              Vehicle Status or Action is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-md-8">
+            <mat-label>Comments</mat-label>
+            <textarea matInput formControlName='comments'></textarea>
+          </mat-form-field>
+        <div>
+          <button mat-raised-button [disabled]="!newVehicleVerificationForm.valid" type="submit" color="primary">
+            Verify Vehicle</button>
+        </div>
+
+      </form>
+
+
+    </mat-step>
+    <mat-step label="Upload VehiclePhotos" state="upload" [stepControl]="vehiclePhotos"
+              [editable]="false">
+      <div *ngIf="!vehicle.isEdit; else elseBlock" class="image-container">
+        <app-image-upload [imageBackground]="'/assets/images/vehicle-views/front.png'"
+                          (uploadedFile)="onSubmitFrontImage($event)"></app-image-upload>
+        <app-image-upload [imageBackground]="'/assets/images/vehicle-views/back.png'"
+                          (uploadedFile)="onSubmitBackImage($event)"></app-image-upload>
+        <app-image-upload [imageBackground]="'/assets/images/vehicle-views/frontside.png'"
+                          (uploadedFile)="onSubmitFrontSideImage($event)"></app-image-upload>
+        <app-image-upload [imageBackground]="'/assets/images/vehicle-views/backside.png'"
+                          (uploadedFile)="onSubmitBackSideImage($event)"></app-image-upload>
+        <app-image-upload [imageBackground]="'/assets/images/vehicle-views/side.png'"
+                          (uploadedFile)="onSubmitSideImage($event)"></app-image-upload>
+        <app-image-upload [imageBackground]="'/assets/images/vehicle-views/licencedisk.png'"
+                          (uploadedFile)="onSubmitLicenceDiskImage($event)"></app-image-upload>
+      </div>
+      <ng-template  #elseBlock>
+        <div class="image-container">
+          <app-image-upload [imageBackground]="!imageUrls[0]? '/assets/images/vehicle-views/front.png':  imageUrls[0]| async"
+                            (uploadedFile)="onSubmitFrontImage($event)"></app-image-upload>
+          <app-image-upload [imageBackground]="!imageUrls[1]? '/assets/images/vehicle-views/back.png':  imageUrls[1]| async"
+                            (uploadedFile)="onSubmitBackImage($event)"></app-image-upload>
+          <app-image-upload [imageBackground]="!imageUrls[2]? '/assets/images/vehicle-views/frontside.png':  imageUrls[2]| async"
+                            (uploadedFile)="onSubmitFrontSideImage($event)"></app-image-upload>
+          <app-image-upload [imageBackground]="!imageUrls[3]? '/assets/images/vehicle-views/backside.png':  imageUrls[3]| async"
+                            (uploadedFile)="onSubmitBackSideImage($event)"></app-image-upload>
+          <app-image-upload [imageBackground]="!imageUrls[4]? '/assets/images/vehicle-views/side.png':  imageUrls[4]| async"
+                            (uploadedFile)="onSubmitSideImage($event)"></app-image-upload>
+          <app-image-upload [imageBackground]="!imageUrls[5]? '/assets/images/vehicle-views/licencedisk.png':  imageUrls[5]| async"
+                            (uploadedFile)="onSubmitLicenceDiskImage($event)"></app-image-upload>
+        </div>
+      </ng-template>
+      <button mat-raised-button [disabled]="fileCount == 0" (click)="onSubmitVehiclePhotos()" color="primary">Upload Vehicle Photos</button>
+    </mat-step>
+  </mat-vertical-stepper>
+
+</div>
+
+
+
+
+
+

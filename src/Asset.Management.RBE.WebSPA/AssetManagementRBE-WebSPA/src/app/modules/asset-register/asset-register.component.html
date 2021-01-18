@@ -1,0 +1,76 @@
+<nb-card accent="info">
+  <nb-card-header>
+    <mat-card-title><h2>Asset Register</h2></mat-card-title>
+    <mat-card-subtitle>Below is the list of Vehicles and Equipment that is Currently on the Asset Register.
+    </mat-card-subtitle>
+  </nb-card-header>
+  <hr>
+  <nb-card-body class="col-md-12">
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" #input>
+    </mat-form-field>
+
+    <div class="table-responsive">
+      <table mat-table  [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="fleetNumber" sticky>
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Fleet No</mat-header-cell>
+          <mat-cell *matCellDef="let vehicle"> {{vehicle.fleetNumber}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="registrationNumber">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Registration No</mat-header-cell>
+          <mat-cell *matCellDef="let vehicle"> {{vehicle.registrationNumber}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="make">
+          <mat-header-cell *matHeaderCellDef> Make</mat-header-cell>
+          <mat-cell *matCellDef="let vehicle"> {{vehicle.make}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="model">
+          <mat-header-cell *matHeaderCellDef> Model</mat-header-cell>
+          <mat-cell  *matCellDef="let vehicle"> {{vehicle.model}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="region">
+          <mat-header-cell *matHeaderCellDef  mat-sort-header>Region</mat-header-cell>
+          <mat-cell  *matCellDef="let vehicle">
+            {{vehicle.region}}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="district">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>District</mat-header-cell>
+          <mat-cell  *matCellDef="let vehicle">
+            {{vehicle.district}}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="client">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Client</mat-header-cell>
+          <mat-cell  *matCellDef="let vehicle">
+            {{vehicle.client}}
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Actions">
+          <mat-header-cell  *matHeaderCellDef> Edit Options</mat-header-cell>
+          <mat-cell *matCellDef="let vehicle" >
+            <button  style="margin-right: 5px" matTooltip="Detail" matTooltipPosition="above" mat-mini-fab (click)="openVehicleDetailDialog(vehicle.uid)" color="primary"
+                    aria-label="Example icon button with a menu icon">
+              <mat-icon>subject</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true" ></mat-header-row>
+        <mat-header-row *matRowDef="let row; columns: displayedColumns; "></mat-header-row>
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="6">No data </td>
+        </tr>
+      </table>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </nb-card-footer>
+</nb-card>
+
+
+

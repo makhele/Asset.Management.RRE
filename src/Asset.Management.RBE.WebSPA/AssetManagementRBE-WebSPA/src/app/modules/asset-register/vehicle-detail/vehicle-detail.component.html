@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>Vehicles Detail</h2>
+<mat-card-subtitle>Vehicle Detail</mat-card-subtitle>
+<hr>
+<div mat-dialog-content>
+
+  <dl class="row">
+    <dt class="col-md-3 col-sm-6">Fleet Number:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.fleetNumber}}</dd>
+    <dt class="col-md-3 col-sm-6">Registration Number:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.registrationNumber}}</dd>
+    <dt class="col-md-3 col-sm-6">Make:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.make}}</dd>
+    <dt class="col-md-3 col-sm-6">Model:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.model}}</dd>
+    <dt class="col-md-3 col-sm-6">Engine Number:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.engineNumber}}</dd>
+    <dt class="col-md-3 col-sm-6">Chassis Number:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.chassisNumber}}</dd>
+    <dt class="col-md-3 col-sm-6">Region:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.region}}</dd>
+    <dt class="col-md-3 col-sm-6">District / Workshop / Pool Location:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.district}}</dd>
+    <dt class="col-md-3 col-sm-6">Current Client:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.client}}</dd>
+    <ng-template [ngIf]="vehicle.client ==='Other Institutions (OI)'">
+      <dt  class="col-md-3 col-sm-6">Other Institution Name:</dt>
+      <dd class="col-md-3 col-sm-6">{{vehicle.otherInstitutionName}}</dd>
+    </ng-template>
+    <dt class="col-md-3 col-sm-6">Condition:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.condition}}</dd>
+    <dt class="col-md-3 col-sm-6">Status:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.status}}</dd>
+    <dt class="col-md-3 col-sm-6">Comments:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.comments}}</dd>
+  </dl>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button [mat-dialog-close] color="primary">Close</button>
+</div>

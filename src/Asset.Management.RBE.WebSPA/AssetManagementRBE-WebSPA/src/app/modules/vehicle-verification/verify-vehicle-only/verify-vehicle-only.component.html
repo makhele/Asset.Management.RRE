@@ -1,0 +1,170 @@
+<form [formGroup]="newVehicleVerificationForm" (ngSubmit)="onSubmit(newVehicleVerificationForm.value)">
+  <h2 mat-dialog-title>Verify Vehicle or Equipment</h2>
+  <mat-card-subtitle>Verify Vehicle or Equipment. Note the vehicle <strong>will not be marked as verified</strong>, this will happen only when a Image is upload</mat-card-subtitle>
+  <hr>
+  <dl class="row">
+    <dt class="col-md-3 col-sm-6">Fleet Number:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.fleetNumber}}</dd>
+    <dt class="col-md-3 col-sm-6">Registration Number:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.registrationNumber}}</dd>
+    <dt class="col-md-3 col-sm-6">Make:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.make}}</dd>
+    <dt class="col-md-3 col-sm-6">Model:</dt>
+    <dd class="col-md-3 col-sm-6">{{vehicle.model}}</dd>
+  </dl>
+  <hr>
+  <div mat-dialog-content>
+    <mat-form-field class="col-md-6">
+      <mat-label>Fleet Number</mat-label>
+      <input matInput formControlName='fleetNumber'>
+      <mat-error *ngIf="newVehicleVerificationForm.get('fleetNumber').hasError('required')">
+        Fleet Number is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="newVehicleVerificationForm.get('fleetNumber').hasError('noSpaces')">
+        Fleet Number should not contain spaces
+      </mat-error>
+      <mat-error *ngIf="newVehicleVerificationForm.get('fleetNumber').hasError('pattern')">
+        Fleet Number format is invalid e.g <strong>GBL999FS</strong>
+      </mat-error>
+      <mat-error
+        *ngIf="newVehicleVerificationForm.get('fleetNumber').hasError('minlength') || newVehicleVerificationForm.get('fleetNumber').hasError('maxlength')">
+        Fleet Number should have <strong>8 Alphanumeric Characters</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="col-md-6">
+      <mat-label> Registration Number</mat-label>
+      <input matInput formControlName='registrationNumber'>
+      <mat-error *ngIf="newVehicleVerificationForm.get('registrationNumber').hasError('required')">
+        Registration Number is <strong>required</strong> else input <strong>XXX000FS</strong>
+      </mat-error>
+      <mat-error *ngIf="newVehicleVerificationForm.get('registrationNumber').hasError('noSpaces')">
+        Registration Number should not contain spaces
+      </mat-error>
+      <mat-error *ngIf="newVehicleVerificationForm.get('registrationNumber').hasError('pattern')">
+        Registration Number format is invalid e.g <strong>GBL999FS</strong>
+      </mat-error>
+      <mat-error
+        *ngIf="newVehicleVerificationForm.get('registrationNumber').hasError('minlength') || newVehicleVerificationForm.get('registrationNumber').hasError('maxlength')">
+        Registration Number should have <strong>8 Alphanumeric Characters</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="col-md-6">
+      <mat-label>Make</mat-label>
+      <input matInput formControlName='make'>
+      <mat-error *ngIf="newVehicleVerificationForm.get('make').hasError('required')">
+        Make is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="col-md-6">
+      <mat-label>Model</mat-label>
+      <input matInput formControlName='model'>
+      <mat-error *ngIf="newVehicleVerificationForm.get('model').hasError('required')">
+        Model is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-6">
+      <mat-label>Chassis Number</mat-label>
+      <input matInput formControlName='chassisNumber'>
+      <mat-error *ngIf="newVehicleVerificationForm.get('chassisNumber').hasError('required')">
+        Chassis Number is <strong>required</strong>
+      </mat-error>
+<!--      <mat-error *ngIf="newVehicleVerificationForm.get('chassisNumber').hasError('noSpaces')">-->
+<!--        Chassis Number should not contain spaces-->
+<!--      </mat-error>-->
+
+
+    </mat-form-field>
+    <mat-form-field class="col-md-6">
+      <mat-label>Engine Number</mat-label>
+      <input matInput formControlName='engineNumber'>
+      <mat-error *ngIf="newVehicleVerificationForm.get('engineNumber').hasError('required')">
+        Engine Number is <strong>required</strong>
+      </mat-error>
+<!--      <mat-error *ngIf="newVehicleVerificationForm.get('engineNumber').hasError('noSpaces')">-->
+<!--        Engine Number should not contain spaces-->
+<!--      </mat-error>-->
+    </mat-form-field>
+    <mat-form-field class="col-md-6">
+      <mat-label>KM or Hour Reading</mat-label>
+      <input type="number" matInput formControlName='kmOrHourReading'>
+
+    </mat-form-field>
+    <mat-form-field class="col-md-6">
+      <mat-label>Select Region</mat-label>
+      <mat-select formControlName='region'>
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let region of regions" [value]="region">
+          {{region}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="newVehicleVerificationForm.get('region').hasError('required')">
+        Region is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="col-md-6">
+      <mat-label>District / Workshop / Pool Location</mat-label>
+      <input matInput formControlName='district'>
+      <mat-error *ngIf="newVehicleVerificationForm.get('district').hasError('required')">
+        District is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+<div class="col-md-6">
+  <label>Current Client</label>
+  <mat-radio-group formControlName="client">
+    <mat-radio-button value="Roads Infrastructure (RI)">
+      Roads Infrastructure (RI)
+    </mat-radio-button>
+    <mat-radio-button value="Other Institutions (OI)" #otherInstitution>
+      Other Institutions (OI)
+    </mat-radio-button>
+    <mat-radio-button value="Road Building Equipment (RBE)">
+      Road Building Equipment (RBE)
+    </mat-radio-button>
+  </mat-radio-group>
+</div>
+
+    <mat-form-field *ngIf="otherInstitution.checked" class="col-md-6">
+      <mat-label>Other Institution Name</mat-label>
+      <input matInput formControlName='otherInstitutionName' >
+    </mat-form-field>
+    <div class="col-md-6">
+      <label>Vehicle or Equipment Condition</label>
+      <mat-radio-group formControlName="condition">
+        <mat-radio-button value="Good">
+          Good
+        </mat-radio-button>
+        <mat-radio-button value="Reasonable">
+          Reasonable
+        </mat-radio-button>
+        <mat-radio-button value="Poor">
+          Poor
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+
+    <mat-form-field class="col-md-6">
+      <mat-label>Vehicle Status or Action</mat-label>
+      <mat-select formControlName='status'>
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let status of statuses" [value]="status">
+          {{status}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="newVehicleVerificationForm.get('status').hasError('required')">
+        Vehicle Status or Action is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="col-md-8">
+      <mat-label>Comments</mat-label>
+      <textarea matInput formControlName='comments'></textarea>
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-raised-button [disabled]="!newVehicleVerificationForm.valid" type="submit" color="primary">
+      Verify Vehicle</button>
+    <button mat-button [mat-dialog-close]=undefined>Close</button>
+
+  </div>
+</form>

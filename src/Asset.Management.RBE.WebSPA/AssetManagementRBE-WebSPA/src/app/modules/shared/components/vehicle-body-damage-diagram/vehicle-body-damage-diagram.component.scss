@@ -1,0 +1,23 @@
+.wrapper {
+  position: relative;
+  width: 60vw;
+  height: 30vw;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 58vw;
+}
+
+.signature-pad {
+  position: absolute;
+  width: 60vw;
+  height: 30vw;
+  left: 0;
+  top: 0;
+}

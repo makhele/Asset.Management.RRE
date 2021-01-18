@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "rbe-asset-verification": {
+      "hosting": {
+        "AssetManagementRBE-WebSPA": [
+          "rbe-asset-verification"
+        ]
+      }
+    }
+  }
+}

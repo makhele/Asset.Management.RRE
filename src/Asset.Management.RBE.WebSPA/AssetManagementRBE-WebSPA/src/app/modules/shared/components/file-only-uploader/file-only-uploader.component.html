@@ -1,0 +1,15 @@
+
+  <h2 mat-dialog-title>Upload {{whatToUpload}}</h2>
+  <mat-card-subtitle>Upload {{whatToUpload}}</mat-card-subtitle>
+  <hr>
+  <div mat-dialog-content>
+      <app-file-upload [name]="formDataName" [id]="id" [whatIsBeingUploaded]="whatToUpload"
+                         (uploadedFile)="onSubmitNewFile($event)"></app-file-upload>
+
+  </div>
+
+
+
+
+
+

@@ -1,0 +1,39 @@
+<form [formGroup]="fileForm" (ngSubmit)="onSubmit(fileForm.value)">
+  <div accent="info" class="container" appDnd (fileDropped)="onFileDropped($event)" *ngIf="!fileUploaded">
+    <input type="file" #fileDropRef id="fileDropRef" (change)="fileBrowseHandler($event.target.files)" />
+    <mat-icon color="primary" style="transform: scale(3)">backup</mat-icon>
+    <div style="padding: 1rem">
+      <p>Drag and drop file here, or</p>
+      <label for="fileDropRef">
+        <button mat-raised-button color="primary">
+          Browse for file
+        </button>
+      </label>
+    </div>
+  </div>
+  <div class="files-list">
+    <div class="single-file" *ngFor="let file of files; let i = index">
+      <div class="file-icon" style="width: 50px">
+        <mat-icon color="primary" style="transform: scale(2)">description</mat-icon>
+      </div>
+      <div class="info">
+        <h4 class="name">
+          {{ file?.name }}
+        </h4>
+        <p class="size">
+          {{ formatBytes(file?.size) }}
+        </p>
+        <app-progress [progress]="file?.progress"></app-progress>
+      </div>
+
+      <div class="delete" (click)="deleteFile(i)">
+        <mat-icon color="warn" style="transform: scale(2)">delete</mat-icon>
+      </div>
+    </div>
+  </div>
+  <mat-form-field *ngIf="fileUploaded" class="col-md-12">
+    <mat-label>Note (Optional)</mat-label>
+    <input matInput formControlName='note'>
+  </mat-form-field>
+  <button mat-raised-button type="submit" [disabled]="!fileUploaded" color="primary">Upload {{whatIsBeingUploaded}}</button>
+</form>

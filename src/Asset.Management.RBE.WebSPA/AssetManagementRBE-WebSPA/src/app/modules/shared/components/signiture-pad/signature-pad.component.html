@@ -1,0 +1,15 @@
+<mat-card-subtitle>Sign Below</mat-card-subtitle>
+  <div mat-dialog-content>
+    <hr>
+    <div class="wrapper">
+      <canvas style="border: 2px dashed #888;" id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+    </div>
+  </div>
+  <hr>
+  <div class = "example-flex-container" mat-dialog-actions>
+    <button  mat-raised-button (click)="onSave()" color="primary">Save</button>
+    <button mat-mini-fab color="accent" (click)="clear()" aria-label="Example icon button with a menu icon">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <button mat-raised-button [mat-dialog-close] color="warn">Close</button>
+  </div>

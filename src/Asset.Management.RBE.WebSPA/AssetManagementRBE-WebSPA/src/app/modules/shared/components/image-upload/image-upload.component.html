@@ -1,0 +1,17 @@
+<form [formGroup]="fileForm" (ngSubmit)="onSubmit(fileForm.value)">
+  <div accent="info" class="container" [ngStyle]="{'background-image': 'url(' + imageBackground  + ')'}"  (fileDropped)="onFileDropped($event)" *ngIf="!fileUploaded">
+    <input type="file" (change)="fileBrowseHandler($event.target.files)" />
+
+
+  </div>
+  <div class="files-list">
+    <div class="single-file" *ngFor="let file of files; let i = index">
+      <div class="image-container" *ngIf="imageSrc!== undefined" [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}">
+        <div class="delete" (click)="deleteFile(i)">
+          <mat-icon color="warn" style="transform: scale(2)">close</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>
