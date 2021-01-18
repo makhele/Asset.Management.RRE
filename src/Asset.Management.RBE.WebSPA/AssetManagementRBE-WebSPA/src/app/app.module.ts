@@ -39,6 +39,9 @@ import {AngularFireAnalyticsModule} from '@angular/fire/analytics';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {AssetRegisterModule} from './modules/asset-register/asset-register.module';
+import {LoginModule} from './modules/login/login.module';
+import {AngularFireAuth} from '@angular/fire/auth/auth';
+import {AngularFireAuthModule} from '@angular/fire/auth';
 
 @NgModule({
   declarations: [AppComponent],
@@ -50,6 +53,7 @@ import {AssetRegisterModule} from './modules/asset-register/asset-register.modul
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
+    AngularFireAuthModule,
     HttpClientModule,
     AppRoutingModule,
     NbSidebarModule.forRoot(),
@@ -76,7 +80,8 @@ import {AssetRegisterModule} from './modules/asset-register/asset-register.modul
     MatProgressBarModule,
     //for the new App
     VehicleVerificationModule,
-    AssetRegisterModule
+    AssetRegisterModule,
+    LoginModule
 
   ],
   bootstrap: [AppComponent],

@@ -31,13 +31,14 @@
     "@ngx-loading-bar/router": "^5.1.0",
     "bootstrap": "^4.5.2",
     "eva-icons": "^1.1.2",
+    "firebase": "^7.0 || ^8.0",
     "mat-currency-format": "0.0.7",
+    "ng-connection-service": "^1.0.4",
     "pdfmake": "^0.1.68",
     "rxjs": "~6.5.5",
     "signature_pad": "^3.0.0-beta.4",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.3",
-    "firebase": "^7.0 || ^8.0"
+    "zone.js": "~0.10.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1000.5",

@@ -22,6 +22,8 @@ import {ImageUploadComponent} from './components/image-upload/image-upload.compo
 import {VehicleBodyDamageDiagramComponent} from './components/vehicle-body-damage-diagram/vehicle-body-damage-diagram.component';
 import {CarouselComponent} from './components/carousel/carousel.component';
 import {CarouselDuplicateDirective} from './components/carousel/carousel-duplicate.directive';
+import {AuthenticationService} from './services/authentication.service';
+import {AuthGuard} from './helpers/auth.gaurd';
 
 @NgModule({
   imports: [
@@ -64,7 +66,7 @@ export class SharedModule {
             providers: [
               MatSnackBarModule,
                 DataService, SuffixPipe, PrefixPipe,
-                ConfigurationService,
+                ConfigurationService, AuthGuard, AuthenticationService,
               {
                 provide: HTTP_INTERCEPTORS,
                 useClass: SpinnerInterceptor,

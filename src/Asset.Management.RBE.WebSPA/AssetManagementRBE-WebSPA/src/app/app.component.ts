@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 import {NbIconLibraries, NbMenuItem} from '@nebular/theme';
 import {RoutePaths} from './modules/shared/utils/route-paths';
 import {LoadingBarService} from '@ngx-loading-bar/core';
+import {AuthenticationService} from './modules/shared/services/authentication.service';
+import {Router} from '@angular/router';
+import {IUser} from './modules/shared/models/user.model';
 // import { AnalyticsService } from './@core/utils/analytics.service';
 // import { SeoService } from './@core/utils/seo.service';
 
@@ -14,16 +17,20 @@ import {LoadingBarService} from '@ngx-loading-bar/core';
   selector: 'app-root',
   template: `
       <mat-progress-bar mode="determinate" [value]="loader.value$ | async"></mat-progress-bar>
-  <ngx-one-column-layout>
+  <ngx-one-column-layout *ngIf="currentUser; else elseBlock">
     <nb-menu [items]="menu" autoCollapse="true"></nb-menu>
     <router-outlet>
     </router-outlet>
-  </ngx-one-column-layout>`,
+  </ngx-one-column-layout>
+  <ng-template #elseBlock><app-login></app-login></ng-template>
+  `,
 })
 export class AppComponent implements OnInit {
   menu = MENU_ITEMS;
-
-  constructor(private iconLibraries: NbIconLibraries,  public loader: LoadingBarService) {
+  currentUser: IUser;
+  constructor(private iconLibraries: NbIconLibraries,  public loader: LoadingBarService, private router: Router,
+              private authenticationService: AuthenticationService) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.iconLibraries.registerFontPack('font-awesome', { packClass: 'fas', iconClassPrefix: 'fa' });
     this.iconLibraries.registerFontPack('material-icons');
     // this.iconLibraries.setDefaultPack('font-awesome');
