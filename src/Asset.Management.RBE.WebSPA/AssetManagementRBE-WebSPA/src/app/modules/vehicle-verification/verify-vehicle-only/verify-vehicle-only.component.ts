@@ -10,6 +10,8 @@ import '../../shared/functions/string.extentions';
 import {RoutePaths} from '../../shared/utils/route-paths';
 import {SpinnerOverlayService} from '../../../@theme/components/spinner-overlay/spinner-overlay.service';
 import {Subscription} from 'rxjs';
+import {AuthenticationService} from '../../shared/services/authentication.service';
+import {IUser} from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-verify-vehicle-only',
@@ -19,14 +21,18 @@ import {Subscription} from 'rxjs';
 export class VerifyVehicleOnlyComponent implements OnInit {
 
   vehicle: IVehicle;
+  user: IUser;
   newVehicleVerificationForm: FormGroup;
   regions = ['Motheo', 'Xhariep', 'Lejweleputswa', 'Fezile Dabi', 'Thabo Mofutsanyane', 'Thabo Mofutsanyane 2'];
   statuses = ['Active', 'Repair Pending', 'Under Repair', 'Consider Scrap', 'Consider Card Cancellation'];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: IVehicle, private vehicleVerificationService: VehicleVerificationService,
               public dialogRef: MatDialogRef<VerifyVehicleOnlyComponent>, public dialog: MatDialog, private fb: FormBuilder,
-              private toaster: NbToastrService, private router: Router, private spinnerOverlayService: SpinnerOverlayService) {
+              private toaster: NbToastrService, private router: Router, private spinnerOverlayService: SpinnerOverlayService,
+              private authenticationService: AuthenticationService){
     this.vehicle = this.data;
+
+    this.authenticationService.currentUser.subscribe(user => this.user = user);
 
 
   }
@@ -72,6 +78,9 @@ export class VerifyVehicleOnlyComponent implements OnInit {
     createdVehicle.district = createdVehicle.district.toTitleCase();
     createdVehicle.validInput = true;
     if (this.vehicle.isEdit){
+      createdVehicle.editedByFirstName = this.user.firstName;
+      createdVehicle.editedBySurname = this.user.surname;
+      createdVehicle.editedByEmail = this.user.email;
       createdVehicle.dateEdited = new Date();
     }
     this.vehicleVerificationService.postVerifiedVehicleOnly(createdVehicle).then(() => {

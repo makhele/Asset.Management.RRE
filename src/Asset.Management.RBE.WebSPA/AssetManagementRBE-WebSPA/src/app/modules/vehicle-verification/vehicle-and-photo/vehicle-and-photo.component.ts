@@ -10,6 +10,8 @@ import {SpinnerOverlayService} from '../../../@theme/components/spinner-overlay/
 import {ExtendedValidators} from '../../shared/functions/validators.extentions';
 import {forkJoin, Subscription} from 'rxjs';
 import {MatStepper} from '@angular/material/stepper';
+import {AuthenticationService} from '../../shared/services/authentication.service';
+import {IUser} from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-vehicle-and-photo',
@@ -27,13 +29,16 @@ export class VehicleAndPhotoComponent implements OnInit {
   regions = ['Motheo', 'Xhariep', 'Lejweleputswa', 'Fezile Dabi', 'Thabo Mofutsanyane', 'Thabo Mofutsanyane 2'];
   statuses = ['Active', 'Repair Pending', 'Under Repair', 'Consider Scrap', 'Consider Card Cancellation'];
   createdVehicle: IVehicle;
+  user: IUser;
 
   @ViewChild(MatStepper) private stepper: MatStepper;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: IVehicle, private vehicleVerificationService: VehicleVerificationService,
               public dialogRef: MatDialogRef<VehicleAndPhotoComponent>, public dialog: MatDialog, private fb: FormBuilder,
               private toaster: NbToastrService, private router: Router, private storage: AngularFireStorage,
-              private readonly spinnerOverlayService: SpinnerOverlayService) {
+              private readonly spinnerOverlayService: SpinnerOverlayService, private authenticationService: AuthenticationService){
+
+    this.authenticationService.currentUser.subscribe(user => this.user = user);
     this.vehicle = this.data;
     if (this.vehicle.isEdit) {
       this.getPhotosImageUrl();
@@ -156,9 +161,15 @@ export class VehicleAndPhotoComponent implements OnInit {
       complete: () => {
 
         if (this.vehicle.isEdit){
+          this.createdVehicle.editedByFirstName = this.user.firstName;
+          this.createdVehicle.editedBySurname = this.user.surname;
+          this.createdVehicle.editedByEmail = this.user.email;
           this.createdVehicle.dateEdited = new Date();
         }
         else {
+          this.createdVehicle.verifiedByFirstName = this.user.firstName;
+          this.createdVehicle.verifiedBySurname = this.user.surname;
+          this.createdVehicle.verifiedByEmail = this.user.email;
           this.createdVehicle.dateVerified = new Date();
           this.createdVehicle.verified = true;
         }

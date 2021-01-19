@@ -10,6 +10,8 @@ import { finalize } from 'rxjs/operators';
 import {SpinnerOverlayService} from '../../../@theme/components/spinner-overlay/spinner-overlay.service';
 import {forkJoin, Observable, Subscription} from 'rxjs';
 import {UploadTaskSnapshot} from '@angular/fire/storage/interfaces';
+import {AuthenticationService} from '../../shared/services/authentication.service';
+import {IUser} from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-image-upload-only',
@@ -22,10 +24,12 @@ export class ImageUploadOnlyComponent implements OnInit {
   fileCount = 0;
   imageUrls = new Array(6);
   fileUploaded: boolean;
+  user: IUser;
   constructor(@Inject(MAT_DIALOG_DATA) public data: IVehicle, private vehicleVerificationService: VehicleVerificationService,
               public dialogRef: MatDialogRef<ImageUploadOnlyComponent>, public dialog: MatDialog, private fb: FormBuilder,
               private toaster: NbToastrService, private router: Router, private storage: AngularFireStorage,
-              private readonly spinnerOverlayService: SpinnerOverlayService) {
+              private readonly spinnerOverlayService: SpinnerOverlayService, private authenticationService: AuthenticationService){
+    this.authenticationService.currentUser.subscribe(user => this.user = user)
     this.fileUploaded = false;
     this.vehicle = data;
 
@@ -85,10 +89,17 @@ export class ImageUploadOnlyComponent implements OnInit {
       complete: () => {
         this.vehicle.atLeastOnePhotoUploaded = true;
         this.vehicle.verified = true;
+        console.log('logging user', this.user);
         if (this.vehicle.isEdit){
+          this.vehicle.editedByFirstName = this.user.firstName;
+          this.vehicle.editedBySurname = this.user.surname;
+          this.vehicle.editedByEmail = this.user.email;
           this.vehicle.dateEdited = new Date();
         }
         else {
+          this.vehicle.verifiedByFirstName = this.user.firstName;
+          this.vehicle.verifiedBySurname = this.user.surname;
+          this.vehicle.verifiedByEmail = this.user.email;
           this.vehicle.dateVerified = new Date();
           this.vehicle.verified = true;
         }
