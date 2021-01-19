@@ -4,19 +4,21 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  */
 import { Component, OnInit } from '@angular/core';
-import {NbIconLibraries, NbMenuItem} from '@nebular/theme';
+import {NbIconLibraries, NbMenuItem, NbToastrService} from '@nebular/theme';
 import {RoutePaths} from './modules/shared/utils/route-paths';
 import {LoadingBarService} from '@ngx-loading-bar/core';
 import {AuthenticationService} from './modules/shared/services/authentication.service';
 import {Router} from '@angular/router';
 import {IUser} from './modules/shared/models/user.model';
+import {ConnectionService} from 'ng-connection-service';
 // import { AnalyticsService } from './@core/utils/analytics.service';
 // import { SeoService } from './@core/utils/seo.service';
 
 @Component({
   selector: 'app-root',
-  template: `
-      <mat-progress-bar mode="determinate" [value]="loader.value$ | async"></mat-progress-bar>
+  template:
+  `
+  <mat-progress-bar mode="determinate" [value]="loader.value$ | async"></mat-progress-bar>
   <ngx-one-column-layout *ngIf="currentUser; else elseBlock">
     <nb-menu [items]="menu" autoCollapse="true"></nb-menu>
     <router-outlet>
@@ -29,10 +31,17 @@ export class AppComponent implements OnInit {
   menu = MENU_ITEMS;
   currentUser: IUser;
   constructor(private iconLibraries: NbIconLibraries,  public loader: LoadingBarService, private router: Router,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService, private toaster: NbToastrService,
+              private connectionService: ConnectionService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.iconLibraries.registerFontPack('font-awesome', { packClass: 'fas', iconClassPrefix: 'fa' });
     this.iconLibraries.registerFontPack('material-icons');
+    this.connectionService.monitor().subscribe(isConnected => {
+      if (!isConnected) {
+        this.toaster.danger('You are not connected to the internet, some feature might not work', 'No Internet',
+          {duration: 3000000, destroyByClick: false, hasIcon: true, icon: 'wifi-off-outline'});
+      }
+    });
     // this.iconLibraries.setDefaultPack('font-awesome');
   }
 

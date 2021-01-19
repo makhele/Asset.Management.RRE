@@ -6,6 +6,8 @@ import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject, Observable } from 'rxjs';
 import { RippleService } from '../../../@core/utils/ripple.service';
+import {AuthenticationService} from '../../../modules/shared/services/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'ngx-header',
@@ -57,7 +59,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private userService: UserData,
     private layoutService: LayoutService,
     private breakpointService: NbMediaBreakpointsService,
-    private rippleService: RippleService,
+    private rippleService: RippleService, private authenticationService: AuthenticationService, private router: Router
   ) {
     this.materialTheme$ = this.themeService.onThemeChange()
       .pipe(map(theme => {
@@ -111,5 +113,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateHome() {
     this.menuService.navigateHome();
     return false;
+  }
+
+  logOut() {
+    this.authenticationService.logout();
+    window.location.reload();
   }
 }

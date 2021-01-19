@@ -1,7 +1,8 @@
 export class RoutePaths{
 
 
-  static readonly LOGIN = 'login';
+  static readonly LOGIN = 'auth/login';
+  static readonly PASSWORD_RESET = 'auth/reset';
 
   static readonly ASSET_REGISTER = 'asset/register';
 

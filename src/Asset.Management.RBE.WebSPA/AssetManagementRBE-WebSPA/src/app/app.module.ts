@@ -39,7 +39,7 @@ import {AngularFireAnalyticsModule} from '@angular/fire/analytics';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {AssetRegisterModule} from './modules/asset-register/asset-register.module';
-import {LoginModule} from './modules/login/login.module';
+import {LoginModule} from './modules/auth/login.module';
 import {AngularFireAuth} from '@angular/fire/auth/auth';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 

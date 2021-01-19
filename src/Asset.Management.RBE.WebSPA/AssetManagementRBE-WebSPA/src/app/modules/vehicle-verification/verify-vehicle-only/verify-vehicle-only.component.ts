@@ -8,6 +8,8 @@ import {Router} from '@angular/router';
 import {ExtendedValidators} from '../../shared/functions/validators.extentions';
 import '../../shared/functions/string.extentions';
 import {RoutePaths} from '../../shared/utils/route-paths';
+import {SpinnerOverlayService} from '../../../@theme/components/spinner-overlay/spinner-overlay.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-verify-vehicle-only',
@@ -23,7 +25,7 @@ export class VerifyVehicleOnlyComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: IVehicle, private vehicleVerificationService: VehicleVerificationService,
               public dialogRef: MatDialogRef<VerifyVehicleOnlyComponent>, public dialog: MatDialog, private fb: FormBuilder,
-              private toaster: NbToastrService, private router: Router) {
+              private toaster: NbToastrService, private router: Router, private spinnerOverlayService: SpinnerOverlayService) {
     this.vehicle = this.data;
 
 
@@ -60,6 +62,7 @@ export class VerifyVehicleOnlyComponent implements OnInit {
   }
 
   onSubmit(createdVehicle: IVehicle): void {
+    const spinnerSubscription: Subscription = this.spinnerOverlayService.spinner$.subscribe();
     createdVehicle.fleetNumber = createdVehicle.fleetNumber.toUpperCase();
     createdVehicle.registrationNumber = createdVehicle.registrationNumber.toUpperCase();
     createdVehicle.make = createdVehicle.make.toTitleCase();
@@ -71,8 +74,8 @@ export class VerifyVehicleOnlyComponent implements OnInit {
     if (this.vehicle.isEdit){
       createdVehicle.dateEdited = new Date();
     }
-    console.log(createdVehicle);
     this.vehicleVerificationService.postVerifiedVehicleOnly(createdVehicle).then(() => {
+        spinnerSubscription.unsubscribe();
         this.toaster.success(`${this.vehicle.fleetNumber} was successfully verified`, 'Success:' );
       // this.router.navigate([RoutePaths.ASSET_VERIFICATION_VERIFIED ]);
         this.dialogRef.close();

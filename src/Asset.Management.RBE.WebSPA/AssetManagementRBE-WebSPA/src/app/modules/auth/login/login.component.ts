@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {first} from 'rxjs/operators';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthenticationService} from '../shared/services/authentication.service';
+import {AuthenticationService} from '../../shared/services/authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {RoutePaths} from '../../shared/utils/route-paths';
+import {VerifyVehicleOnlyComponent} from '../../vehicle-verification/verify-vehicle-only/verify-vehicle-only.component';
+import {PasswordResetComponent} from '../password-reset/password-reset.component';
+import {MatDialog} from '@angular/material/dialog';
+import {SpinnerOverlayService} from '../../../@theme/components/spinner-overlay/spinner-overlay.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -16,38 +22,41 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
+  resetLInk =  RoutePaths.PASSWORD_RESET;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    public dialog: MatDialog,
+    private spinnerOverlayService: SpinnerOverlayService,
   ) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
     }
+
+
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
 
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
   }
 
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
-  onSubmit() {
+  onSubmit(): void {
     this.submitted = true;
-    console.log('ruuning onsubmit');
-    console.log('return Url', this.returnUrl);
-
-
     // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;

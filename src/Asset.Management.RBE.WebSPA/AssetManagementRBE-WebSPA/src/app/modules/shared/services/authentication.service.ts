@@ -68,4 +68,7 @@ export class AuthenticationService {
       this.currentUserSubject.next(null);
   }
 
+  passwordRest(email){
+    return this.auth.sendPasswordResetEmail(email);
+  }
 }
