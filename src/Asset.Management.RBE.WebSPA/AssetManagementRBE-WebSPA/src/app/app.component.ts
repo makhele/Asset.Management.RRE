@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
     this.iconLibraries.registerFontPack('material-icons');
     this.connectionService.monitor().subscribe(isConnected => {
       if (!isConnected) {
-        this.toaster.danger('You are not connected to the internet, some feature might not work', 'No Internet',
+        this.toaster.danger('You are not connected to the internet, some features might not work', 'No Internet',
           {duration: 3000000, destroyByClick: false, hasIcon: true, icon: 'wifi-off-outline'});
       }
     });

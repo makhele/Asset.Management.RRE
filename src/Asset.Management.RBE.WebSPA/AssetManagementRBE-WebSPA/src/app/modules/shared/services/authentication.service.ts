@@ -35,14 +35,10 @@ export class AuthenticationService {
       console.log('userFromAuth.user.uid', userFromAuth.user.uid);
       itemsCollection.valueChanges().pipe(take(1)).subscribe({
         next: (users) => {
-          console.log('before user assigment', this.user);
           this.user = users[0];
 
-          console.log('users[0]', users[0]);
-          console.log('after user assigment', this.user);
           localStorage.setItem(CookieKey.COOKIE_KEY, JSON.stringify(this.user));
           this.currentUserSubject.next(this.user);
-          console.log('after retrunded user assigment', this.user);
           return this.user;
         },
         error: (err) => {

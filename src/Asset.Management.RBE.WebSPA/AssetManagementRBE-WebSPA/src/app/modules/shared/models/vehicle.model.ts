@@ -61,7 +61,7 @@ export class VehicleKeys {
 
   static readonly NEW_ADDITION_KEY = 'newAddition';
 
-  static readonly VERIFIED_BY_FIRST_NAME_KEY = 'verifiedByName';
+  static readonly VERIFIED_BY_FIRST_NAME_KEY = 'verifiedByFirstName';
   static readonly VERIFIED_BY_SURNAME_KEY = 'verifiedBySurname';
   static readonly VERIFIED_BY_EMAIL_KEY = 'verifiedByEmail';
   static readonly DATE_VERIFIED_KEY = 'dateVerified';
